@@ -1,0 +1,555 @@
+<!doctype html>
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kính Xanh Admin - Thêm sản phẩm</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="js/tailwind-config.js"></script>
+    <link href="css/style.css" rel="stylesheet" />
+    <style>
+      .img-slot {
+        transition: border-color 0.2s;
+      }
+      .img-slot:hover {
+        border-color: #002366;
+      }
+      .color-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f1f3f5;
+        border-radius: 999px;
+        padding: 4px 10px 4px 6px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .color-tag button {
+        line-height: 1;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #888;
+        font-size: 14px;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface page-fade">
+    <!-- SIDEBAR -->
+    <aside
+      class="h-screen w-64 fixed left-0 top-0 bg-surface-container flex flex-col py-8 px-4 z-50"
+    >
+      <div class="mb-10 px-4">
+        <h1 class="text-xl font-bold text-primary tracking-tight">
+          Kính Xanh Admin
+        </h1>
+        <p class="text-xs text-on-surface-variant opacity-70">
+          Clinical Management
+        </p>
+      </div>
+      <nav class="flex-grow space-y-2">
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-on-surface opacity-70 hover:bg-surface-variant hover:translate-x-1 rounded-xl transition-all duration-200"
+          href="admin.html"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >dashboard</span
+          >
+          <span class="font-['Inter'] text-sm">Tổng quan</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 bg-surface-container-lowest text-primary rounded-xl shadow-sm font-medium"
+          href="create-product.html"
+        >
+          <span class="material-symbols-outlined">eyeglasses</span>
+          <span class="font-['Inter'] text-sm">Thêm sản phẩm</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-on-surface opacity-70 hover:bg-surface-variant hover:translate-x-1 rounded-xl transition-all duration-200"
+          href="order-success.html"
+        >
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="font-['Inter'] text-sm">Đơn hàng</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-on-surface opacity-70 hover:bg-surface-variant hover:translate-x-1 rounded-xl transition-all duration-200"
+          href="profile.html"
+        >
+          <span class="material-symbols-outlined">group</span>
+          <span class="font-['Inter'] text-sm">Khách hàng</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-on-surface opacity-70 hover:bg-surface-variant hover:translate-x-1 rounded-xl transition-all duration-200"
+          href="index.html"
+        >
+          <span class="material-symbols-outlined">insights</span>
+          <span class="font-['Inter'] text-sm">Phân tích</span>
+        </a>
+      </nav>
+      <div class="pt-8 border-t border-outline-variant/20 space-y-2">
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-on-surface opacity-70 hover:bg-surface-variant rounded-xl transition-all duration-200"
+          href="profile.html"
+        >
+          <span class="material-symbols-outlined">settings</span>
+          <span class="font-['Inter'] text-sm">Cài đặt</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 text-on-surface opacity-70 hover:bg-surface-variant rounded-xl transition-all duration-200"
+          href="login.html"
+        >
+          <span class="material-symbols-outlined">logout</span>
+          <span class="font-['Inter'] text-sm">Đăng xuất</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="ml-64 p-10 min-h-screen">
+      <header class="flex justify-between items-center mb-10">
+        <div>
+          <h2 class="text-3xl font-extrabold text-primary tracking-tight">
+            Thêm sản phẩm
+          </h2>
+          <p class="text-on-surface-variant">
+            Điền đầy đủ thông tin để thêm kính mới vào hệ thống
+          </p>
+        </div>
+        <a
+          href="products.html"
+          class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/30 text-primary font-bold py-3 px-5 rounded-xl hover:bg-surface-container transition-colors"
+        >
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+          <span class="text-sm">Về Kho hàng</span>
+        </a>
+      </header>
+
+      <form id="createProductForm">
+        <div class="grid grid-cols-1 gap-8">
+          <div class="space-y-6">
+            <!-- Thông tin cơ bản -->
+            <div
+              class="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_12px_32px_rgba(25,28,29,0.04)] p-8"
+            >
+              <h3
+                class="text-xs font-bold text-primary mb-6 flex items-center gap-2 uppercase tracking-widest"
+              >
+                <span
+                  class="material-symbols-outlined text-base"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >info</span
+                >
+                Thông tin cơ bản
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="md:col-span-2">
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Tên sản phẩm <span class="text-error">*</span></label
+                  >
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="VD: Oakley Holbrook Tortoise"
+                    required
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >SKU <span class="text-error">*</span></label
+                  >
+                  <input
+                    id="sku"
+                    type="text"
+                    placeholder="VD: OAK-HOLBROOK-PRIZM"
+                    required
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Slug <span class="text-error">*</span></label
+                  >
+                  <input
+                    id="slug"
+                    type="text"
+                    placeholder="oakley-holbrook-tortoise"
+                    required
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Thương hiệu <span class="text-error">*</span></label
+                  >
+                  <select
+                    id="brand"
+                    required
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  >
+                    <option value="">Chọn thương hiệu</option>
+                    <option>Ray-Ban</option>
+                    <option>Oakley</option>
+                    <option>Gentle Monster</option>
+                    <option>Prada</option>
+                    <option>Gucci</option>
+                    <option>Dior</option>
+                    <option>Versace</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Giá bán (₫) <span class="text-error">*</span></label
+                  >
+                  <input
+                    id="price"
+                    type="number"
+                    placeholder="2900000"
+                    required
+                    min="0"
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Giới tính</label
+                  >
+                  <select
+                    id="gender"
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  >
+                    <option value="unisex">Unisex</option>
+                    <option value="men">Nam</option>
+                    <option value="women">Nữ</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Chất liệu gọng</label
+                  >
+                  <input
+                    id="frame_material"
+                    type="text"
+                    placeholder="VD: Titanium, Acetate, TR90"
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Loại tròng</label
+                  >
+                  <input
+                    id="lens_type"
+                    type="text"
+                    placeholder="VD: Anti-blue light, UV400, Prizm"
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Badge</label
+                  >
+                  <input
+                    id="badge"
+                    type="text"
+                    placeholder="VD: -30%, Bestseller, Hot, New"
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Mô tả -->
+            <div
+              class="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_12px_32px_rgba(25,28,29,0.04)] p-8"
+            >
+              <h3
+                class="text-xs font-bold text-primary mb-6 flex items-center gap-2 uppercase tracking-widest"
+              >
+                <span
+                  class="material-symbols-outlined text-base"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >description</span
+                >
+                Mô tả sản phẩm
+              </h3>
+              <div class="space-y-4">
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Mô tả ngắn</label
+                  >
+                  <input
+                    id="short_description"
+                    type="text"
+                    placeholder="VD: Gọng Titan siêu nhẹ, kháng khuẩn"
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Mô tả chi tiết</label
+                  >
+                  <textarea
+                    id="description"
+                    rows="4"
+                    placeholder="Nhập mô tả đầy đủ về sản phẩm..."
+                    class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all resize-none"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hình ảnh -->
+            <div
+              class="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_12px_32px_rgba(25,28,29,0.04)] p-8"
+            >
+              <h3
+                class="text-xs font-bold text-primary mb-1 flex items-center gap-2 uppercase tracking-widest"
+              >
+                <span
+                  class="material-symbols-outlined text-base"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >image</span
+                >
+                Hình ảnh sản phẩm
+              </h3>
+              <p class="text-xs text-on-surface-variant mb-5">
+                Ảnh đầu tiên là ảnh chính (thumbnail). Bấm vào ô để chọn ảnh từ
+                máy.
+              </p>
+              <div class="grid grid-cols-4 gap-4" id="image-slots"></div>
+            </div>
+
+            <!-- Màu sắc -->
+            <div
+              class="bg-surface-container-lowest rounded-2xl border border-outline-variant/10 shadow-[0_12px_32px_rgba(25,28,29,0.04)] p-8"
+            >
+              <h3
+                class="text-xs font-bold text-primary mb-1 flex items-center gap-2 uppercase tracking-widest"
+              >
+                <span
+                  class="material-symbols-outlined text-base"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >palette</span
+                >
+                Màu sắc gọng
+              </h3>
+              <p class="text-xs text-on-surface-variant mb-4">
+                Mỗi màu tạo một variant trong
+                <code class="bg-surface-container px-1 rounded"
+                  >product_variants</code
+                >.
+              </p>
+              <div
+                id="color-tags"
+                class="flex flex-wrap gap-2 mb-5 min-h-[32px]"
+              >
+                <span class="text-xs text-on-surface-variant italic"
+                  >Chưa có màu nào...</span
+                >
+              </div>
+              <div class="flex gap-3 items-end flex-wrap">
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Tên màu</label
+                  >
+                  <input
+                    id="color-name-input"
+                    type="text"
+                    placeholder="VD: Tortoise"
+                    class="bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-36"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Màu hex</label
+                  >
+                  <div class="flex gap-2 items-center">
+                    <input
+                      id="color-hex-input"
+                      type="color"
+                      value="#8B4513"
+                      class="w-10 h-10 rounded-lg border border-outline-variant/40 cursor-pointer p-0.5 bg-surface-container"
+                    />
+                    <input
+                      id="color-hex-text"
+                      type="text"
+                      value="#8B4513"
+                      maxlength="7"
+                      class="bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-24"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Tồn kho</label
+                  >
+                  <input
+                    id="color-stock-input"
+                    type="number"
+                    placeholder="0"
+                    min="0"
+                    value="10"
+                    class="bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-24"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-bold text-on-surface-variant mb-1.5 uppercase tracking-wide"
+                    >Size</label
+                  >
+                  <input
+                    id="color-size-input"
+                    type="text"
+                    placeholder="52mm"
+                    class="bg-surface-container border border-outline-variant/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-24"
+                  />
+                </div>
+                <button
+                  type="button"
+                  id="add-color-btn"
+                  class="flex items-center gap-1.5 bg-primary text-white font-bold px-4 py-2.5 rounded-xl hover:bg-primary/90 active:scale-95 transition-all text-sm h-10"
+                >
+                  <span class="material-symbols-outlined text-sm">add</span>Thêm
+                </button>
+              </div>
+              <div class="mt-4 flex flex-wrap gap-2 items-center">
+                <span
+                  class="text-xs text-on-surface-variant font-bold uppercase tracking-wide"
+                  >Nhanh:</span
+                >
+                <button
+                  type="button"
+                  data-color="Black"
+                  data-hex="#1a1a1a"
+                  class="preset-btn text-xs px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 hover:border-primary transition-colors"
+                >
+                  ⬤ Black
+                </button>
+                <button
+                  type="button"
+                  data-color="Gold"
+                  data-hex="#D4AF37"
+                  class="preset-btn text-xs px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 hover:border-primary transition-colors"
+                >
+                  ⬤ Gold
+                </button>
+                <button
+                  type="button"
+                  data-color="Silver"
+                  data-hex="#C0C0C0"
+                  class="preset-btn text-xs px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 hover:border-primary transition-colors"
+                >
+                  ⬤ Silver
+                </button>
+                <button
+                  type="button"
+                  data-color="Tortoise"
+                  data-hex="#8B4513"
+                  class="preset-btn text-xs px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 hover:border-primary transition-colors"
+                >
+                  ⬤ Tortoise
+                </button>
+                <button
+                  type="button"
+                  data-color="Rose Gold"
+                  data-hex="#B76E79"
+                  class="preset-btn text-xs px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 hover:border-primary transition-colors"
+                >
+                  ⬤ Rose Gold
+                </button>
+                <button
+                  type="button"
+                  data-color="Navy"
+                  data-hex="#003153"
+                  class="preset-btn text-xs px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 hover:border-primary transition-colors"
+                >
+                  ⬤ Navy
+                </button>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="space-y-3">
+              <button
+                type="submit"
+                id="submit-btn"
+                class="w-full flex items-center justify-center gap-2 bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/20"
+              >
+                <span class="material-symbols-outlined text-base"
+                  >add_circle</span
+                >
+                Thêm sản phẩm
+              </button>
+              <button
+                type="button"
+                id="reset-btn"
+                class="w-full flex items-center justify-center gap-2 border border-outline-variant/40 text-on-surface-variant font-semibold py-3.5 rounded-xl hover:bg-surface-container transition-colors text-sm"
+              >
+                <span class="material-symbols-outlined text-base"
+                  >restart_alt</span
+                >
+                Xoá form
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="ml-64 w-auto border-t border-outline-variant/20 bg-surface-container flex flex-col md:flex-row justify-between items-center px-10 py-12 space-y-4 md:space-y-0"
+    >
+      <p
+        class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface opacity-60"
+      >
+        © 2026 Kính Xanh Optical. Premium Vision Care.
+      </p>
+      <div class="flex gap-8">
+        <a
+          class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface opacity-60 hover:opacity-100 transition-opacity"
+          href="privacy.html"
+          >Chính sách bảo mật</a
+        >
+        <a
+          class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface opacity-60 hover:opacity-100 transition-opacity"
+          href="terms.html"
+          >Điều khoản dịch vụ</a
+        >
+        <a
+          class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface opacity-60 hover:opacity-100 transition-opacity"
+          href="support.html"
+          >Liên hệ</a
+        >
+      </div>
+    </footer>
+
+    <script src="js/create-product.js"></script>
+  </body>
+</html>
