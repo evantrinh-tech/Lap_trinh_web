@@ -21,6 +21,10 @@ function getUserIdFromToken(): ?string
     $headers    = getallheaders();
     $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? null;
 
+    if (!$authHeader && isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
+    }
+
     if (!$authHeader || !preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
         return null;
     }

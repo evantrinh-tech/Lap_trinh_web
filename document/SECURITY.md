@@ -4,6 +4,76 @@
 
 ---
 
+## Mô Hình OSI 7 Tầng & Giải Thích Dễ Nhớ
+
+Mô hình OSI là nền tảng để hiểu rõ cách thức dữ liệu đi qua mạng và là cơ sở để thiết kế các cơ chế bảo mật (như mã hóa, firewall, chống DDoS).
+
+**Mẹo nhớ thứ tự (Từ tầng 1 đến tầng 7 - Dưới lên trên):**
+> **"Vật lý – Liên kết – Mạng – Giao vận – Phiên – Trình bày – Ứng dụng"**
+> *(Hoặc câu tiếng Anh vui: **P**lease **D**o **N**ot **T**hrow **S**ausage **P**izza **A**way)*
+
+**Giải thích chức năng từng tầng (Theo kiểu đời thường dễ hiểu):**
+
+1. **Physical (Tầng Vật lý) – "Người chuyển phát cơ bắp"**
+   - **Làm gì:** Truyền dữ liệu thô (chuỗi bit 0 và 1) qua các môi trường vật lý (điện, ánh sáng, sóng vô tuyến).
+   - **Ví dụ:** Cáp mạng, sóng Wi-Fi, Bluetooth, đầu nối RJ45.
+
+2. **Data Link (Tầng Liên kết dữ liệu) – "Bác bảo vệ nội bộ"**
+   - **Làm gì:** Truyền dữ liệu giữa 2 thiết bị *trong cùng một mạng cục bộ (LAN)*. Nó dùng địa chỉ **MAC** (mã định danh phần cứng) để nhận biết thiết bị.
+   - **Ví dụ:** Các Switch mạng chia cổng trong phòng máy tính.
+
+3. **Network (Tầng Mạng) – "Bưu tá dẫn đường"**
+   - **Làm gì:** Tìm đường đi (định tuyến) tốt nhất để gửi dữ liệu xuyên qua nhiều mạng khác nhau trên thế giới. Nó dùng địa chỉ **IP**.
+   - **Ví dụ:** Router (cục phát Wi-Fi) giúp điện thoại của bạn kết nối được với Server của Google tại Mỹ.
+
+4. **Transport (Tầng Giao vận) – "Quản lý bưu cục"**
+   - **Làm gì:** Băm nhỏ dữ liệu lớn ra để dễ gửi, và lắp ráp lại ở đích đến. Có 2 phong cách giao hàng: Giao an toàn tuyệt đối, mất là gửi lại (TCP) hoặc Giao siêu tốc, rớt đồ kệ nó (UDP).
+   - **Ví dụ:** Tải file, lướt web bắt buộc dùng TCP. Gọi Video Call, Livestream game thường dùng UDP để đỡ lag.
+
+5. **Session (Tầng Phiên) – "Lễ tân"**
+   - **Làm gì:** Mở cuộc trò chuyện (thiết lập), duy trì kết nối, và ngắt kết nối (kết thúc phiên) giữa 2 hệ thống.
+   - **Ví dụ:** App ngân hàng tự động văng ra ngoài, yêu cầu bạn đăng nhập lại nếu để máy không quá 5 phút (đóng Session).
+
+6. **Presentation (Tầng Trình bày) – "Thông dịch viên kiêm Thợ khóa"**
+   - **Làm gì:** Chuyển đổi định dạng dữ liệu (dịch ngôn ngữ), nén cho nhẹ, và quan trọng nhất đối với bảo mật là **Mã hóa / Giải mã**.
+   - **Ví dụ:** Mã hóa mật khẩu của bạn thành chuỗi ký tự loằng ngoằng (SSL/TLS) trước khi bay trên mạng để hacker không dịch được.
+
+7. **Application (Tầng Ứng dụng) – "Giao diện cửa hàng"**
+   - **Làm gì:** Gần với bạn nhất, là nơi các phần mềm (Trình duyệt, Email app, Game) sử dụng mạng để phục vụ bạn.
+   - **Ví dụ:** Giao thức lướt Web (HTTP/HTTPS), gửi Email (SMTP/IMAP), tải file (FTP).
+
+---
+
+## Hiểu Rõ Cookie, Session & Token (Bản Chất & Phân Biệt)
+
+Trong lập trình Web, để duy trì trạng thái đăng nhập (ai là ai), chúng ta có 3 khái niệm cốt lõi. Hãy tưởng tượng server là **một quán bar** và client (người dùng) là **khách hàng**.
+
+### 1. Session (Phiên làm việc) – "Sổ ghi nợ của quán bar"
+- **Cách hoạt động:** Khi bạn đăng nhập thành công, Server tạo ra một Session (lưu trên RAM hoặc Database của server) đánh dấu bạn đã login, và trả về cho bạn một cái mã gọi là `Session ID`. Mỗi lần bạn thao tác, bạn gửi kèm `Session ID` này lên. Server lật "sổ" ra dò xem ID này của ai.
+- **Ví dụ quán bar:** Lần đầu bạn tới, quán bar ghi tên bạn vào **sổ cái** (Session) và phát cho bạn **vé nhựa số 123** (Session ID). Những lần sau, bạn chỉ cần chìa vé nhựa ra, quán sẽ tự động biết bạn là ai nhờ tra sổ cái.
+- **Ưu điểm:** An toàn tuyệt đối (vì dữ liệu nhạy cảm nằm hết trên server).
+- **Nhược điểm:** Server phải nhớ (tốn RAM), nếu quán bar (server) đông quá sẽ bị quá tải. Khó mở rộng hệ thống (nếu có 2 server A và B, bạn có vé ở server A sang server B sẽ không được nhận ra nếu 2 sổ cái không liên thông).
+
+### 2. Cookie – "Cái túi áo của khách hàng"
+- **Cách hoạt động:** Cookie thực chất là **nơi lưu trữ** (một file text nhỏ) nằm ở trình duyệt của người dùng. Cookie hay được dùng để đựng `Session ID` (hoặc `Token`). Điểm đặc biệt: Trình duyệt *tự động* gửi kèm Cookie trong mọi Request lên Server ở cùng tên miền mà không cần dev phải tự viết code gửi.
+- **Ví dụ quán bar:** Thay vì bắt bạn cầm khư khư cái vé nhựa bằng tay, quán bar thiết kế riêng một cái **túi áo** (Cookie) để bỏ vé nhựa (Session ID) vào đó. Mỗi lần bạn bước qua cửa, bảo vệ tự động thò tay vào túi áo lấy vé ra kiểm tra, bạn không cần tự móc ra.
+- **Ưu điểm:** Tự động hóa việc gửi/nhận, rất tiện lợi cho lập trình viên.
+- **Nhược điểm:** Dễ bị tấn công CSRF (Giả mạo yêu cầu) nếu bị kẻ xấu lợi dụng "túi áo" gửi request độc hại thay bạn. Có giới hạn dung lượng nhỏ (khoảng 4KB).
+
+### 3. Token (Ví dụ: JWT - JSON Web Token) – "Thẻ Căn cước công dân"
+- **Cách hoạt động:** Khi bạn đăng nhập, Server xác thực xong sẽ đóng dấu ký tên vào một cái thẻ (`Token`) có ghi sẵn tên, quyền hạn, thời gian hết hạn... rồi giao hẳn cho bạn giữ. Lần sau bạn đến, Server chỉ cần nhìn con dấu chữ ký (signature) trên Token là biết thẻ thật hay giả, **không cần phải tra sổ cái nữa**.
+- **Ví dụ quán bar:** Quán bar làm cho bạn một cái **thẻ VIP** (Token) có chữ ký xịn của giám đốc, trên thẻ ghi rõ "Nguyễn Văn A - 20 tuổi". Lần sau bạn đến, bảo vệ chỉ cần xem thẻ, thấy chữ ký chuẩn và chưa hết hạn là cho vào. Quán **không cần tốn công tra sổ cái nữa**.
+- **Ưu điểm:** Không tốn bộ nhớ server (Stateless). Cực kỳ dễ mở rộng (Scalable) - có mở 100 server thì bảo vệ cứ thấy chữ ký là cho vào, không cần chung một sổ cái. Tránh được lỗi CSRF nếu không lưu trong Cookie.
+- **Nhược điểm:** Khó thu hồi (revoke) thẻ ngay lập tức một khi đã phát ra (trừ khi thẻ hết hạn hoặc server phải làm cơ chế "Blacklist" rườm rà). Nếu lộ Token là bị đoạt quyền, nên cần gửi qua HTTPS chặt chẽ.
+
+**Tóm lại (Luồng đi ở dự án Kính Xanh):**
+Dự án Kính Xanh của chúng ta sử dụng **JWT Token** và lưu trữ ở `localStorage` của trình duyệt. 
+Tức là ta cấp "Thẻ VIP" cho khách tự giữ trong ví, mỗi lần gọi API khách phải tự tay lấy thẻ ra (qua HTTP header `Authorization: Bearer <token>`) trình cho Server. 
+- **Không dùng Session:** Để giảm tải cho Server và dễ dàng mở rộng.
+- **Không dùng Cookie:** Để tránh hoàn toàn rủi ro bị tấn công CSRF!
+
+---
+
 ## 1. Tổng Quan
 
 Hệ thống bảo mật được xây dựng tùy chỉnh trong `backend/lib/security.php`, không phụ thuộc thư viện bên ngoài. Gồm **6 lớp bảo vệ** kích hoạt qua hàm `applyDDoSProtection()`.

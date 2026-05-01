@@ -27,7 +27,12 @@ async function loadProfile() {
     try {
         const res  = await authFetch(`${API_BASE}/auth/me.php`);
         const data = await res.json();
-        if (!data.success) { window.location.href = 'login.html'; return; }
+        if (!data.success) { 
+            localStorage.removeItem('kx_auth_token');
+            localStorage.removeItem('kx_user');
+            window.location.href = 'login.html'; 
+            return; 
+        }
 
         const u = data.data;
         // Avatar chữ cái đầu
